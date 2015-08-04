@@ -28,7 +28,6 @@ void genNeigh(int **Neigh, int N, int L) {
         if( (i-L) < 0)  Neigh[i][3]=i-L+N;
         else          Neigh[i][3]=i-L;
 }}
-
 		
 double dEnergy(double dRandStep ,int iRandSite) {
     double dE = 0;
@@ -51,16 +50,14 @@ void setStartPos(){
 }
 
 void step(double beta) {
-
-// radians check mod 2pi
+    // radians check mod 2pi
 for(int i=0;i<N;i++)
 	if( lattice[i] > 2*M_PI || lattice[i] < 0 ) {
 		if( lattice[i] > 2*M_PI )
 			lattice[i]=lattice[i]-2*M_PI;
 		if( lattice[i] < 0 )
-			lattice[i]=lattice[i]+2*M_PI;
-	}
-	
+			lattice[i]=lattice[i]+2*M_PI; }
+
 	int pos = (int) N*drand();
         double deltaE = 0.;
  	    double w;
@@ -72,17 +69,11 @@ for(int i=0;i<N;i++)
       	if (rd<w) { lattice[pos] = lattice[pos]+dStep ; }			
 }
 
-
-int main(){
-	
+int main(){	// example, can be modified as anyone likes
+    double beta = 100.;
 	neighInit();
 	setStartPos();
-
-    for(int j=0;j<NN;j++){  std::cout<<Neigh[0][j]<<" "; }
-    for(int j=0;j<NN;j++){  std::cout<<Neigh[1][j]<<" "; }
-	
-		//for(int i=0;i<10000;i++)
-		//step(1.0);
-
+    for(int i=0;i<10000;i++)
+        step(beta);
     return 0;
 }
