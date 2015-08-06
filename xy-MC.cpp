@@ -58,7 +58,7 @@ for(int i=0;i<N;i++)
 		if( lattice[i] < 0 )
 			lattice[i]=lattice[i]+2*M_PI; }
 
-	int pos = (int) N*drand();
+	int pos = (int) (N-1)*drand();
         double deltaE = 0.;
  	    double w;
 		double dStep = dAmp*(drand()-.5);
@@ -73,7 +73,7 @@ int main(){	// example, can be modified as anyone likes
     double beta = 100.;
 	neighInit();
 	setStartPos();
-    for(int i=0;i<10000;i++)
+    for(int i=0;i<100000;i++)
         step(beta);
     return 0;
 }
