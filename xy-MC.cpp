@@ -33,9 +33,11 @@ double dEnergy(double dRandStep ,int iRandSite) {
     double dE = 0;
     double dNewAngle = lattice[iRandSite]+dRandStep;
     double J = 1;
-    for(int j=0;j<NN;j++){	dE += J*cos( (double) lattice[iRandSite] - (double) lattice[Neigh[iRandSite][j]] );
-							dE -= J*cos( dNewAngle - (double) lattice[Neigh[iRandSite][j]] );	}
-	return dE;
+    for(int j=0;j<NN;j++) {
+        dE += J*cos( (double) lattice[iRandSite] - (double) lattice[Neigh[iRandSite][j]] );
+		dE -= J*cos( dNewAngle - (double) lattice[Neigh[iRandSite][j]] );	
+        }
+    return dE;
 }
 
 void neighInit(){
