@@ -41,8 +41,8 @@ double dEnergy(double dRandStep ,int iRandSite) {
 }
 
 void neighInit(){
-	for(int i=0;i<N;i++) {
-		Neigh[i] = new int[NN]; }
+	for(int i=0;i<N;i++) 
+		Neigh[i] = new int[NN]; 
 	genNeigh(Neigh,N,L);
 }
 
