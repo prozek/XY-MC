@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <iostream>
-	
+
 double drand() {
-    return double( rand() )/ double( RAND_MAX ); }
+return double( rand() )/ double( RAND_MAX ); }
 
 int L = 10;     // lattice size
 int N = L*L;    // number of sites
@@ -27,54 +27,54 @@ void genNeigh(int **Neigh, int N, int L) {
 
         if( (i-L) < 0)  Neigh[i][3]=i-L+N;
         else          Neigh[i][3]=i-L;
-}}
-		
+    }}
+
 double dEnergy(double dRandStep ,int iRandSite) {
     double dE = 0;
     double dNewAngle = lattice[iRandSite]+dRandStep;
     double J = 1;
     for(int j=0;j<NN;j++) {
         dE += J*cos( (double) lattice[iRandSite] - (double) lattice[Neigh[iRandSite][j]] );
-		dE -= J*cos( dNewAngle - (double) lattice[Neigh[iRandSite][j]] );	
-        }
+        dE -= J*cos( dNewAngle - (double) lattice[Neigh[iRandSite][j]] );	
+    }
     return dE;
 }
 
 void neighInit(){
-	for(int i=0;i<N;i++) 
-		Neigh[i] = new int[NN]; 
-	genNeigh(Neigh,N,L);
+    for(int i=0;i<N;i++) 
+        Neigh[i] = new int[NN]; 
+    genNeigh(Neigh,N,L);
 }
 
 void setStartPos(){
-	for(int i=0;i<N;i++)
-	lattice[i]=2*M_PI*drand();
+    for(int i=0;i<N;i++)
+        lattice[i]=2*M_PI*drand();
 }
 
 void step(double beta) {
     // radians check mod 2pi
-for(int i=0;i<N;i++)
-	if( lattice[i] > 2*M_PI || lattice[i] < 0 ) {
-		if( lattice[i] > 2*M_PI )
-			lattice[i]=lattice[i]-2*M_PI;
-		if( lattice[i] < 0 )
-			lattice[i]=lattice[i]+2*M_PI; }
+    for(int i=0;i<N;i++)
+        if( lattice[i] > 2*M_PI || lattice[i] < 0 ) {
+            if( lattice[i] > 2*M_PI )
+                lattice[i]=lattice[i]-2*M_PI;
+            if( lattice[i] < 0 )
+                lattice[i]=lattice[i]+2*M_PI; }
 
-	int pos = (int) (N-1)*drand();
-        double deltaE = 0.;
- 	    double w;
-		double dStep = dAmp*(drand()-.5);
-        deltaE += dEnergy(dStep,pos);
-	    double rd = drand();
-	    if (deltaE < 0) { w = 1.0 ; }
-	    else            { w = exp(-beta*deltaE) ; }
-      	if (rd<w) { lattice[pos] = lattice[pos]+dStep ; }			
+    int pos = (int) (N-1)*drand();
+    double deltaE = 0.;
+    double w;
+    double dStep = dAmp*(drand()-.5);
+    deltaE += dEnergy(dStep,pos);
+    double rd = drand();
+    if (deltaE < 0) { w = 1.0 ; }
+    else            { w = exp(-beta*deltaE) ; }
+    if (rd<w) { lattice[pos] = lattice[pos]+dStep ; }			
 }
 
 int main(){	// example, can be modified as anyone likes
     double beta = 100.;
-	neighInit();
-	setStartPos();
+    neighInit();
+    setStartPos();
     for(int i=0;i<100000;i++)
         step(beta);
     return 0;
